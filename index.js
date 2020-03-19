@@ -39,7 +39,7 @@ app.get('/api/getIcon/:id', async (req, res) => {
 });
 
 app.get('/api/getBackgroundImage/:status/:time', async (req, res) => {
-    let apiResponse = await (await (unsplash.search.photos("weather " + req.params.status + " " + req.params.time, 1, 10, { orientation: "portrait" }))).json();
+    let apiResponse = await (await (unsplash.search.photos("weather " + req.params.status + " " + req.params.time, 1, 100, { orientation: "portrait" }))).json();
     console.log(apiResponse);
     return res.json(apiResponse.results);
 });

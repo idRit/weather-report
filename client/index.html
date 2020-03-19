@@ -13,15 +13,27 @@
 <body>
     <div class="container">
         <div class="inner">
-            <img src="" alt="status" id="status" style="z-index: 2;">
-            <div id="desc" style="z-index: 2;"></div><br>
+            <div class="inner i2">
+                <img src="" alt="status" id="status" style="z-index: 2;">
+                <div id="desc" style="z-index: 2;"></div>
+            </div>
+            <br>
+
             <h2 id="bigFeelsLike" style="z-index: 2;"></h2>
             <div id="area" style="z-index: 2;"></div><br>
-            <div style="display: flex;" style="z-index: 2;">
-                <p>High: </p><div id="hi"></div>
+            <div class="inner i3">
+                <div style="display: flex;" style="z-index: 2;">
+                    <div id="hi"></div>
+                </div>
+                <div style="display: flex;" style="z-index: 2;">
+                    <div id="lo"></div>
+                </div>
             </div>
             <div style="display: flex;" style="z-index: 2;">
-                <p>Low: </p><div id="lo"></div>
+                <div id="hi"></div>
+            </div>
+            <div style="display: flex;" style="z-index: 2;">
+                <div id="lo"></div>
             </div>
             <div id="time" style="z-index: 2;"></div>
         </div>
@@ -42,7 +54,6 @@
                 localStorage.countryCode = obj.address.country_code.toUpperCase();
                 document.querySelector('.container').style.display = "flex";
                 document.querySelector('.headsup').style.display = "none";
-                main();
             });
         }
 
@@ -52,8 +63,10 @@
 
         if (typeof localStorage.city !== "undefined") {
             provideLocation();
+            main();
         } else {
             document.querySelector('.headsup').style.display = "flex";
+            main();
         }
     </script>
 </body>
