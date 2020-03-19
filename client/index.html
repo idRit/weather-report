@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Weather</title>
+    <link rel="stylesheet" href="styles/cleaner.css">
+    <link rel="stylesheet" href="styles/stylesheet.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="inner">
+            <img src="" alt="status" id="status" style="z-index: 2;">
+            <div id="desc" style="z-index: 2;"></div><br>
+            <h2 id="bigFeelsLike" style="z-index: 2;"></h2>
+            <div id="area" style="z-index: 2;"></div><br>
+            <div style="display: flex;" style="z-index: 2;">
+                <p>High: </p><div id="hi"></div>
+            </div>
+            <div style="display: flex;" style="z-index: 2;">
+                <p>Low: </p><div id="lo"></div>
+            </div>
+            <div id="time" style="z-index: 2;"></div>
+        </div>
+    </div>
+    <div class="headsup">
+        <p>Location Permission Needed!</p>
+        <button onclick="provideLocation()">Give Permission</button>
+    </div>
+    <script src="./scripts/app.js"></script>
+    <script>
+        function provideLocation() {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                let lat = position.coords.latitude;
+                let long = position.coords.longitude;
+                let obj = await reverseGeoCode(lat, long);
+                console.log(obj);
+                localStorage.city = obj.address.city;
+                localStorage.countryCode = obj.address.country_code.toUpperCase();
+                document.querySelector('.container').style.display = "flex";
+                document.querySelector('.headsup').style.display = "none";
+                main();
+            });
+        }
+
+        async function reverseGeoCode(lat, long) {
+            return await (await fetch(`https://us1.locationiq.com/v1/reverse.php?key=bea4a9ec9a2ceb&lat=${lat}&lon=${long}&format=json`)).json();
+        }
+
+        if (typeof localStorage.city !== "undefined") {
+            provideLocation();
+        } else {
+            document.querySelector('.headsup').style.display = "flex";
+        }
+    </script>
+</body>
+
+</html>
